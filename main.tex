@@ -1,0 +1,72 @@
+% !TEX root
+% !TEX program = xelatex
+% !BIB program = biber
+
+% \def \PrintMode{} %在使用电子版论文时，请将此行注释。在打印纸质论文时，请保持本行命令不被注释，然后打印时选择双面打印即可。
+
+%用来控制是否启动打印模式的宏，请勿改动。
+\ifx \PrintMode \undefined
+    \def \SideMode{oneside}
+    \def \ClearPageStyle{\clearpage}
+\else
+    \def \SideMode{twoside}
+    \def \ClearPageStyle{\cleardoublepage}
+\fi
+
+\documentclass[a4paper,oneside,UTF8]{article} %A4纸，单面，UTF-8
+
+\input{packages_and_settings.tex} %加载各宏包以及本模板的主要设置
+\addbibresource{./reference/thesis-ref.bib} %加载bib文件（参考文献）
+
+\begin{document}
+
+\pagestyle{empty} %不对正文前的各页面使用页眉页脚
+\newgeometry{top=2.0cm, bottom=2.0cm,left=3.18cm, right=3.18cm} %设置用于首页的页边距
+\input{./preface/inner-cover.tex} %插入内封面
+\ClearPageStyle
+
+\restoregeometry
+%生成目录
+\renewcommand{\contentsname}{\heiti \centerline{ \zihao {-3}目录}}
+\tableofcontents
+\ClearPageStyle
+
+\pagestyle{fancy} %开始使用页眉页脚
+
+\pagenumbering{Roman}
+\input{./preface/abstract-CHS.tex} %生成中英文摘要及关键词
+\ClearPageStyle
+
+\input{./preface/abstract-ENG.tex} %生成中英文摘要及关键词
+\ClearPageStyle
+\setcounter{page}{2}
+
+\pagenumbering{arabic}
+\setcounter{page}{1} %论文页码从正文开始记数
+\zihao{-4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{./body/Section1.tex}                             %
+\input{./body/Section2.tex}                             %
+\input{./body/Section3.tex}                             %
+\input{./body/Section4.tex}                             %
+\input{./body/Section5.tex}                             %
+\input{./body/Section6.tex}                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \theendnotes %尾注
+
+\cleardoublepage
+\phantomsection    
+\printbibliography[title={\heiti \centerline{\zihao {-3}参考文献}} ] %生成参考文献
+\addcontentsline{toc}{section}{参考文献}
+
+% \begin{appendices}   
+% \clearpage
+% %\renewcommand{\thesection}{\chinese{section}}  %生成附录
+% \input{./ending/Appendix.tex}
+% \end{appendices}
+
+\makeacknowledgement
+
+\end{document}
